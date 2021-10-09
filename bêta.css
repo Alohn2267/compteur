@@ -45,7 +45,11 @@ body{background-color: #666666;}*
     line-height: 125px;
     width: 100%;
 }
-
+.Titre {
+  font-size: 45px;
+  color: black;
+  margin-top: 5%;
+}
 svg {
    -webkit-transform: rotate(-90deg);
     transform: rotate(-90deg);
