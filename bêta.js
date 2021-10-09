@@ -56,7 +56,7 @@ function compte_a_rebours()
     var date_evenement = new Date("Oct 22 15:45:00 2021");
     var total_secondes = (date_evenement - date_actuelle) / 1000;
     if(date_actuelle >= date_evenement) {
-        compteur.innerHTML = "En vacances !";
+        aligner.innerHTML = "En vacances !";
         return;
     }
 
@@ -119,10 +119,10 @@ function compte_a_rebours()
             et = "";
         }
 
-        jour.innerHTML = jours + mot_jour + "&nbsp;"
-        heure.innerHTML = heures + mot_heure + "&nbsp;"
-        minute.innerHTML = minutes + mot_minute + "&nbsp;"
-        seconde.innerHTML = secondes + mot_seconde + "&nbsp;"
+        // jour.innerHTML = jours + mot_jour + "&nbsp;"
+        // heure.innerHTML = heures + mot_heure + "&nbsp;"
+        // minute.innerHTML = minutes + mot_minute + "&nbsp;"
+        // seconde.innerHTML = secondes + mot_seconde + "&nbsp;"
     }
     /* Need initial run as interval hasn't yet occured... */
     // Cercles secondes
