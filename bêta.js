@@ -147,7 +147,7 @@ function compte_a_rebours()
         $('.circle_animation_j').css('stroke-dashoffset', initialOffset-((jours)*(initialOffset/time)));
     // Transition quali a la fin
     if(secondes == '') {
-        clone_suppr = $('.suppr').detach();
+        clone_suppr = $('.secondes_item').detach();
         $(".circle_animation_sec").css("transition", "all 0.5s linear");
         setTimeout(function () {
             $(".circle_animation_sec").css("transition", "all 1s linear");
@@ -181,10 +181,7 @@ function compte_a_rebours()
 function append_txt(arg){
     print(arg)
     if(arg==0){
-        // $("ol").append("<li>Appended item</li>");
-        print(clone_suppr)
-        $("ol").append(clone_suppr);
-        print("Hello")
+        $("body").append(clone_suppr);
     }
 }
 console.log("Hello")
