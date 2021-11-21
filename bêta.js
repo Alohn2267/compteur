@@ -16,24 +16,24 @@ $('.zone option[value="C"]').prop('selected',true);
 function zone(zone) {
     if(zone=="A") {
         $(".cal").attr({
-            "value": min_vacs_A[numero_vacs_nb],
-            "min": min_vacs_A[numero_vacs_nb],
-            "max": max_vacs_A[numero_vacs_nb]
+            "value": min_vacs_A[numero_vacs_nb-1],
+            "min": min_vacs_A[numero_vacs_nb-1],
+            "max": max_vacs_A[numero_vacs_nb-1]
         });
     }
     if(zone=="B") {
         $(".cal").attr({
-            "value": min_vacs_B[numero_vacs_nb],
-            "min": min_vacs_B[numero_vacs_nb],
-            "max": max_vacs_B[numero_vacs_nb]
+            "value": min_vacs_B[numero_vacs_nb-1],
+            "min": min_vacs_B[numero_vacs_nb-1],
+            "max": max_vacs_B[numero_vacs_nb-1]
         });
     }
 
     if(zone=="C") {
         $(".cal").attr({
-            "value": min_vacs_C[numero_vacs_nb],
-            "min": min_vacs_C[numero_vacs_nb],
-            "max": max_vacs_C[numero_vacs_nb]
+            "value": min_vacs_C[numero_vacs_nb-1],
+            "min": min_vacs_C[numero_vacs_nb-1],
+            "max": max_vacs_C[numero_vacs_nb-1]
         });
     }
     calendrier()
