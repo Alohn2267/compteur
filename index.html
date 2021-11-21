@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
+    <!-- <meta http-equiv="refresh" content="3"> -->
     <!-- Met le titre de la page -->
-    <title>Bêta</title>
+    <title>[Bêta] Compte à rebours vacances</title>
     <!-- Encodage utf-8 pour les accents et tt  -->
     <meta charset= "utf-8">
     <!-- Insère JQuery -->
@@ -14,14 +15,27 @@
     <!--//Met le logo -->
     <link rel="icon" type="image/png" href="logo.png">
   </head>
-  <body>
+  <body onload="calendrier()" style="background-color: #666">
     <!-- BAR DE CHARGEMENT -->
     <div id="myProgress"> <!-- Bar entiere -->
       <div id="myBar"></div> <!-- Ce qui a déjà été fait -->
-      <div id="txt_bar"></div> 
+      <div id="txt_bar"><a class="etoile" onclick="etoile1('bar')" style="color:rgba(0, 153, 255, 0.582); font-size:15px; cursor:pointer;">*</a></p></div> 
     </div>
-  <!-- COMPTEUR AVEC RONDS -->
-  <p class="Titre">Les vacances seront dans :</p>
+    <!-- Zones scolaires -->
+    <div class="millieu">
+      <br>
+      <select class="zone" name="Zone" value="C" onchange="zone(value);">
+        <option value="A">Zone A</option>
+        <option value="B">Zone B</option>
+        <option value="C">Zone C</option>
+      </select>
+    <!-- Calendrier -->
+    <br><br>
+      <label for="cal">Choisi quand tu termines</label><br>
+      <input onchange="calendrier()" class="cal" id="cal"type="datetime-local" min="2021-12-17T00:00" max="2021-12-19T00:00" value="2021-12-17T15:25"></input>
+    </div>
+    <!-- COMPTEUR AVEC RONDS -->
+  <p class="Titre">Les vacances seront dans :<a class="etoile1" onclick="etoile1('delay')" style="color:rgba(0, 153, 255, 0.582); font-size:35px; cursor:pointer;">*</a></p>
     <div class="aligner" id="aligner">
       <!-- JOURS -->
       <span class="item html">
@@ -36,7 +50,7 @@
           <!-- Cercle gris transparant -->
           <circle r="69.85699" cy="81" cx="81" stroke-width="1" stroke="rgba(125, 125, 125, 0.5)" fill="none"/>
           <!-- Cercle de couleur -->
-          <circle class="circle_animation_j" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#ffcc66" fill="none"/>
+          <circle class="circle_animation_jour" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#ffcc66" fill="none"/>
         </g>
         </svg>
       </span>
@@ -48,19 +62,19 @@
         <g>
           <title>Layer 1</title>
           <circle r="69.85699" cy="81" cx="81" stroke-width="1" stroke="rgba(125, 125, 125, 0.5)" fill="none"/>
-          <circle class="circle_animation_h" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#99ccff" fill="none"/>
+          <circle class="circle_animation_heure" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#99ccff" fill="none"/>
         </g>
         </svg>
       </span>
       <!-- MINUTES (Pour commentaire plus approfondis voir "Jour" l.28-41) -->
       <span class="item html">
-        <h3 class="min_h3 h3">0</h3><p></p>
-        <h3 class="mot_min_h3 h3">0</h3>
+        <h3 class="minute_h3 h3">0</h3><p></p>
+        <h3 class="mot_minute_h3 h3">0</h3>
         <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
         <g>
           <title>Layer 1</title>
           <circle r="69.85699" cy="81" cx="81" stroke-width="1" stroke="rgba(125, 125, 125, 0.5)" fill="none"/>
-          <circle class="circle_animation_min" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#bfb" fill="none"/>
+          <circle class="circle_animation_minute" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#bfb" fill="none"/>
         </g>
         </svg>
       </span>
@@ -72,12 +86,16 @@
         <g>
           <title>Layer 1</title>
           <circle r="69.85699" cy="81" cx="81" stroke-width="1" stroke="rgba(125, 125, 125, 0.5)" fill="none"/>
-          <circle class="circle_animation_sec" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#ff9999" fill="none"/>
+          <circle class="circle_animation_seconde" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#ff9999" fill="none"/>
         </g>
         </svg>
       </span>
     </div>
-    <br>
+    <!-- Asterisques -->
+    <div style="text-align: center; color: white;">
+      <p style="display:none;" class="etoile_bar">Le début de la barre de progression est le 8/11/2021 8h00</p>
+      <p style="display:none;" class="etoile_delay">Il peut y avoir 0.5 maximum de delay par rapport a la réalitée comparé a quand la page est lancée</p>
+    </div>
     <script src="bêta.js"></script>
   </body>
 </html>

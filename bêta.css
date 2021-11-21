@@ -1,4 +1,19 @@
-body{background-color: #666666;}
+body {
+  background-repeat: no-repeat;
+}
+@media screen and (min-width: 650px) {
+  body {
+    background-size: 100vw 100vh;
+  }
+}
+@media screen and (max-width: 650px) {
+  body {
+    object-fit: none;
+    background-position-x: 50%;
+    background-size: cover;
+    background-size: 200% 100vh;
+  }
+}
 
 /* BAR DE PROGRESSION */
 #txt_bar {
@@ -32,24 +47,22 @@ body{background-color: #666666;}
 }
 
 /* CERCLES */
-@media screen and (max-width: 650px) { /*The following CSS runs only for displays with a width (in pixels) of more than 800px*/
+@media screen and (max-width: 650px) {
   .aligner {
     display: block;
-    position: align;
-    justify-content: center;
-    text-align: center;
   }
 }
 
-@media screen and (min-width: 650px) { /*The following CSS runs only for displays with a width (in pixels) of less than 800px*/
+@media screen and (min-width: 650px) {
   .aligner {
     display: flex;
-    position: align;
-    justify-content: center;
-    text-align: center;
   }
 }
-
+.aligner {
+  position: align;
+  justify-content: center;
+  text-align: center;
+}
 .item {
   position: relative;
   float: left;
@@ -65,7 +78,7 @@ body{background-color: #666666;}
 .Titre {
   font-size: 45px;
   color: black;
-  margin-top: 5%;
+  margin-top: 10px;
   text-align: center;
 }
 svg {
@@ -73,17 +86,28 @@ svg {
     transform: rotate(-90deg);
 }
 
-.circle_animation_sec, .circle_animation_min, .circle_animation_h, .circle_animation_j {
+.circle_animation_seconde, .circle_animation_minute, .circle_animation_heure, .circle_animation_jour {
   stroke-dasharray: 440; /* this value is the pixel circumference of the circle */
   stroke-dashoffset: 440;
   transition: all 0.5s linear;
 }
 
-.jour_h3, .heure_h3, .min_h3, .seconde_h3 {
+.jour_h3, .heure_h3, .minute_h3, .seconde_h3 {
   color: white;
   /* font-size: 40px */
 }
 
 span {
   display: block;
+}
+
+/* Calendrier */
+.millieu, .zone {
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+.cal, .zone {
+  border-radius: 10px;
+  outline: 2px solid #666666;
 }
