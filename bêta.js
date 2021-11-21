@@ -124,7 +124,7 @@ function compte_a_rebours() {
     var date_evenement = new Date(Date_)
     var total_secondes = (date_evenement - date_actuelle) / 1000;
     if(date_actuelle >= date_evenement) {
-        $("body").css("background-image", "url('noel.png')")
+        $("body").css("background-image", "url('NOEL.png')")
         $("#myBar").css("border-bottom-right-radius", "25px")
         $("#myBar").css("border-top-right-radius", "25px")
         rentrée()
