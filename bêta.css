@@ -59,7 +59,8 @@ body {
 }
 .item {
   position: relative;
-  /* float: left; */
+  float: left;
+  float: right;
   width:calc((100%-1000)/2);
 }
 
