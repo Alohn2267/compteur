@@ -2,6 +2,9 @@
 <html lang="fr">
   <head>
     <!-- <meta http-equiv="refresh" content="3"> -->
+    <!-- Pikaday Library pour IOS min, max calendrier-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <!-- Met le titre de la page -->
     <title>[Bêta] Compte à rebours vacances</title>
     <!-- Encodage utf-8 pour les accents et tt  -->
@@ -15,7 +18,7 @@
     <!--//Met le logo -->
     <link rel="icon" type="image/png" href="logo.png">
   </head>
-  <body onload="calendrier()" style="background-color: #666">
+  <body onload="calendrier()" style="background-color: #42403d">
     <!-- BAR DE CHARGEMENT -->
     <div id="myProgress"> <!-- Bar entiere -->
       <div id="myBar"></div> <!-- Ce qui a déjà été fait -->
@@ -24,7 +27,7 @@
     <!-- Zones scolaires -->
     <div class="millieu">
       <br>
-      <select class="zone" name="Zone" value="C" onchange="zone(value);">
+      <select style='color:black' class="zone" name="Zone" value="C" onchange="zone(value);">
         <option value="A">Zone A</option>
         <option value="B">Zone B</option>
         <option value="C">Zone C</option>
@@ -32,7 +35,7 @@
     <!-- Calendrier -->
     <br><br>
       <label for="cal">Choisi quand tu termines</label><br>
-      <input onchange="calendrier()" class="cal" id="cal"type="datetime-local" min="2021-12-17T00:00" max="2021-12-19T00:00" value="2021-12-17T15:25"></input>
+      <input style='color:black' onchange="calendrier()" class="cal" id="cal" type="datetime-local" min="2021-12-17T00:00" max="2021-12-19T00:00" value="2021-12-17T15:25"></input>
     </div>
     <!-- COMPTEUR AVEC RONDS -->
   <p class="Titre">Les vacances seront dans :<a class="etoile1" onclick="etoile1('delay')" style="color:rgba(0, 153, 255, 0.582); font-size:35px; cursor:pointer;">*</a></p>
@@ -93,7 +96,7 @@
     </div>
     <!-- Asterisques -->
     <div style="text-align: center; color: white;">
-      <p style="display:none;" class="etoile_bar">Le début de la barre de progression est le 8/11/2021 8h00</p>
+      <p style="display:none;" class="etoile_bar">Le début de la barre de progression est le 08/11/2021 8h00</p>
       <p style="display:none;" class="etoile_delay">Il peut y avoir 0.5 maximum de delay par rapport a la réalitée comparé a quand la page est lancée</p>
     </div>
     <script src="bêta.js"></script>
