@@ -10,49 +10,42 @@ function etoile1(type) {
             $(".etoile_" + type).css("display", "none");
     }, 2500);
 }
-//[DEV] Essayer de rendre ça en 1 seule ARRAY
+// Nom des VACANCES
+nom_vacs = ["de Noël", "d'hiver", "de printemps", "d'été",]
+
+// Dates vacances et rentrées
+min_vacs_A = ["2021-12-17T00:00", "2022-02-11T00:00", "2022-04-15T00:00", "2022-07-07T00:00"]
+min_vacs_B = ["2021-12-17T00:00", "2022-02-04T00:00", "2022-04-08T00:00", "2022-07-07T00:00"]
+min_vacs_C = ["2021-12-17T00:00", "2022-02-18T00:00", "2022-04-22T00:00", "2022-07-07T00:00"]
+min_vacs = []
+
 // Zones
 $('.zone option[value="C"]').prop('selected',true);
 function zone(zone) {
-    if(zone=="A") {
-        $(".cal").attr({
-            "value": min_vacs_A[numero_vacs_nb-1],
-            "min": min_vacs_A[numero_vacs_nb-1],
-            "max": max_vacs_A[numero_vacs_nb-1]
-        });
-    }
-    if(zone=="B") {
-        $(".cal").attr({
-            "value": min_vacs_B[numero_vacs_nb-1],
-            "min": min_vacs_B[numero_vacs_nb-1],
-            "max": max_vacs_B[numero_vacs_nb-1]
-        });
-    }
-
-    if(zone=="C") {
-        $(".cal").attr({
-            "value": min_vacs_C[numero_vacs_nb-1],
-            "min": min_vacs_C[numero_vacs_nb-1],
-            "max": max_vacs_C[numero_vacs_nb-1]
-        });
+    min_vacs.push(min_vacs_A[numero_vacs_nb-1], min_vacs_B[numero_vacs_nb-1], min_vacs_C[numero_vacs_nb-1],)
+    for (let i = 0; i < 2; i++) {
+        int_zone = parseInt(zone, 36)-10;
+        if(int_zone==i) {
+            // $(".cal").attr({
+            //     "value": min_vacs[i],
+            //     "min": min_vacs[i],
+            //     "max": Ajout_jour(min_vacs[i], 2)
+            // });
+            var picker = new Pikaday({
+                field: document.getElementById('cal'),
+                maxDate: Ajout_jour(min_vacs[i], 2),
+                minDate: min_vacs[i]
+              });
+        }
     }
     calendrier()
 }
-// Nom des VACANCES
-nom_vacs = ["de Noël", "d'hiver", "de printemps", "d'été",]
-// Dates vacances et rentrées
-//[DEV] Tenté ARRAY
-min_vacs_A = ["2021-12-17T00:00", "2022-02-11T00:00", "2022-04-15T00:00", "2022-07-07T00:00"]
-max_vacs_A = ["2021-12-19T00:00", "2022-02-13T00:00", "2022-04-17T00:00", "2022-07-09T00:00"]
-rentree_A = ["2022-01-02T00:00", "2022-02-28T00:00", "2022-05-02T00:00", "2022-09-01T00:00"]
 
-min_vacs_B = ["2021-12-17T00:00", "2022-02-04T00:00", "2022-04-08T00:00", "2022-07-07T00:00"]
-max_vacs_B = ["2021-12-19T00:00", "2022-02-06T00:00", "2022-04-10T00:00", "2022-07-09T00:00"]
-rentree_B = ["2022-01-02T00:00", "2022-02-21T00:00", "2022-04-25T00:00", "2022-09-01T00:00"]
-
-min_vacs_C = ["2021-12-17T00:00", "2022-02-18T00:00", "2022-04-22T00:00", "2022-07-07T00:00"]
-max_vacs_C = ["2021-12-19T00:00", "2022-02-20T00:00", "2022-04-24T00:00", "2022-07-09T00:00"]
-rentree_C = ["2022-01-02T00:00", "2022-03-06T00:00", "2022-05-08T00:00", "2022-09-01T00:00"]
+function Ajout_jour(date, jours) {
+    var nouvelle = new Date(date);
+    nouvelle.setDate(nouvelle.getDate() + jours);
+    return nouvelle;
+}
 
 numero_vacs_nb = 0
 function nom_vacances() {
@@ -83,18 +76,19 @@ var initialOffset = '440';
 
 // BAR DE CHARGEMENT
 var width = 0
-function move(end, beginning, now) {
+function move(end, beginning) {
     etoile = $(".etoile").clone()
-    window.actualisation1 = setTimeout("move(" + end + "," + beginning + "," + now + ");", 1000);
-    width = (Math.round((100/(end-beginning)*(now-beginning))*100))/100
-    if (width >= 100) {
+    window.actualisation1 = setTimeout("move(" + end + "," + beginning + ");", 1000);
+    if (width <= 100) {
+        mnt = new Date();
+        width = (Math.round((100/(end-beginning)*(mnt-beginning))*100))/100 // Arrondi au centieme
+        myBar.style.width = width + "%";
+        txt_bar.innerHTML = width  + "% de déjà fait !";
+        etoile.appendTo("#txt_bar");
+    } else {
     myBar.style.width = 99 + "%";
     txt_bar.innerHTML = "En vacances !";
     clearInterval(window.actualisation1);
-    } else {
-    myBar.style.width = width + "%";
-    txt_bar.innerHTML = width  + "% de déjà fait !";
-    etoile.appendTo("#txt_bar");
     }
 }
 
@@ -106,16 +100,15 @@ function calendrier() {
     setTimeout(function () {
         $(".circle_animation_" + temps1[i]).css("transition", "all 1s linear");
     }, 100);} // Fait que pour passer du nombre originel au nouveau nombre ça prenne seulement 0.5 sec et non l'unitée changée
-    compte_a_rebours()
-    load()
+    compte_a_rebours() // Met les bonnes valeurs
+    load() // Cercles rapides
 }
 
 // CONVERTI DATE DE INPUT EN UNIX TIMESTANP
 function unix(OG_date){
     var unixtime = Date.parse(OG_date)
-    print(unixtime)
     clearInterval(window.actualisation1);
-    move(unixtime, 1636354800000, Date.now())
+    move(unixtime, 1636354800000)
 }
 
 // Compte à rebours
@@ -151,8 +144,10 @@ function compte_a_rebours() {
         ]
         // Enlève le "s" au mot si besoin
         for ( let i = 4; i < 8; i++) {
-            if (temps[i-4] <= 1){temps[i+4] = " " + temps[i];
-        mot_jour = temps[11]; mot_heure = temps[10]; mot_minute = temps[9]; mot_seconde = temps[8];}
+            if (temps[i-4] <= 1){
+                temps[i+4] = " " + temps[i];
+                mot_jour = temps[11]; mot_heure = temps[10]; mot_minute = temps[9]; mot_seconde = temps[8];
+            }
 
         //Cercles
             $(('.circle_animation_' + temps[i])).css('stroke-dashoffset', initialOffset-(1*(initialOffset/time)));
@@ -170,27 +165,23 @@ function compte_a_rebours() {
     }
     var actualisation = setTimeout("compte_a_rebours();", 1);
 }
-//[DEV] FAIRE ça EN ARRAY
+
 function rentrée() {
-    print("yo")
+    //Utile si user n'apele pas Zone() avant
+    min_vacs.push(min_vacs_A[numero_vacs_nb-1], min_vacs_B[numero_vacs_nb-1], min_vacs_C[numero_vacs_nb-1],)
     zone = $(".zone").val()
     var date_actuelle = new Date();
-    if(zone=="A"){
-        var date_evenement = new Date(rentree_A[numero_vacs_nb])
-    }
-    if(zone=="B"){
-        var date_evenement = new Date(rentree_B[numero_vacs_nb])
-    }
-    if(zone=="C"){
-        var date_evenement = new Date(rentree_C[numero_vacs_nb])
+    for (let i = 0; i < 2; i++) {
+        int_zone = parseInt(zone, 36)-10; // Met la lettre de la zone en chiffre -1
+        if(int_zone==i) {
+            var date_evenement = Ajout_jour(min_vacs[i], 15)
+        }
     }
     if(date_actuelle >= date_evenement) {
-        print("yoo")
         $(".aligner").replace(Garder_aligner)
-        nom_vacances();
-        zone(zone)
-        load()
-        calendrier()
+        nom_vacances(); // Change le nom des Vacances
+        zone(zone) // Met le calendrier avec les bonnes dates
+        load() // Cercles rapides
         return;
     };
 }
