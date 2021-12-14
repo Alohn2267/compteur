@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <!-- <meta http-equiv="refresh" content="3"> -->
-    <!-- Pikaday Library pour IOS min, max calendrier-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
-    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <!-- Met le titre de la page -->
     <title>[Bêta] Compte à rebours vacances</title>
     <!-- Encodage utf-8 pour les accents et tt  -->
@@ -13,16 +9,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Met le css -->
     <link rel="stylesheet" href="bêta.css">
-    <!-- // Pour toutes les tailles d'ecrans -->
+    <!-- Pour toutes les tailles d'ecrans -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--//Met le logo -->
-    <link rel="icon" type="image/png" href="logo.png">
+    <!-- Met le logo -->
+    <link rel="icon" type="image/png" href="Images/logo.png">
+
+    <!-- [DEV] -->
+      <!-- <meta http-equiv="refresh" content="3"> -->
   </head>
-  <body onload="calendrier()" style="background-color: #42403d">
+  <body onload="calendrier()" style="background-color: var(--font)">
     <!-- BAR DE CHARGEMENT -->
     <div id="myProgress"> <!-- Bar entiere -->
       <div id="myBar"></div> <!-- Ce qui a déjà été fait -->
-      <div id="txt_bar"><a class="etoile" onclick="etoile1('bar')" style="color:rgba(0, 153, 255, 0.582); font-size:15px; cursor:pointer;">*</a></p></div> 
+      <div id="txt_bar"><a class="etoile" onclick="etoile1('bar')" style="color:#a0a2ff; font-size:15px; cursor:pointer;">*</a></p></div> 
     </div>
     <!-- Zones scolaires -->
     <div class="millieu">
@@ -34,18 +33,18 @@
       </select>
     <!-- Calendrier -->
     <br><br>
-      <label for="cal">Choisi quand tu termines</label><br>
+      <label for="cal">Choisi quand tu termines<br></label><br class="tel_none">
       <input style='color:black' onchange="calendrier()" class="cal" id="cal" type="datetime-local" min="2021-12-17T00:00" max="2021-12-19T00:00" value="2021-12-17T15:25"></input>
     </div>
     <!-- COMPTEUR AVEC RONDS -->
-  <p class="Titre">Les vacances seront dans :<a class="etoile1" onclick="etoile1('delay')" style="color:rgba(0, 153, 255, 0.582); font-size:35px; cursor:pointer;">*</a></p>
+  <p class="Titre">Les vacances seront dans :<a class="etoile1" onclick="etoile1('delay')" style="color: #a0a2ff; font-size:35px; cursor:pointer;">*</a></p>
     <div class="aligner" id="aligner">
       <!-- JOURS -->
-      <span class="item html">
+      <span class="item">
         <!-- Nombres de jour(s) restants -->
-        <h3 class="jour_h3 h3">0</h3><p></p>
+        <h3 class="jour_h3 h3_nb">0</h3><p></p>
         <!-- Met "jour" avec s si besoin -->
-        <h3 class="mot_jour_h3 h3">0</h3>
+        <h3 class="mot_jour_h3 h3_txt">0</h3>
         <!-- Crai un cercle -->
         <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
         <g>
@@ -58,9 +57,9 @@
         </svg>
       </span>
       <!-- HEURES (Pour commentaire plus approfondis voir "Jour" l.28-41) -->
-      <span class="item html">
-        <h3 class="heure_h3 h3">0</h3><p></p>
-        <h3 class="mot_heure_h3 h3">0</h3>
+      <span class="item">
+        <h3 class="heure_h3 h3_nb">0</h3><p></p>
+        <h3 class="mot_heure_h3 h3_txt">0</h3>
         <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
         <g>
           <title>Layer 1</title>
@@ -69,10 +68,12 @@
         </g>
         </svg>
       </span>
+      <!-- Saut de ligne quand c'est téléphone -->
+      <span style="display: table"></span> 
       <!-- MINUTES (Pour commentaire plus approfondis voir "Jour" l.28-41) -->
-      <span class="item html">
-        <h3 class="minute_h3 h3">0</h3><p></p>
-        <h3 class="mot_minute_h3 h3">0</h3>
+      <span class="item">
+        <h3 class="minute_h3 h3_nb">0</h3><p></p>
+        <h3 class="mot_minute_h3 h3_txt">0</h3>
         <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
         <g>
           <title>Layer 1</title>
@@ -82,9 +83,9 @@
         </svg>
       </span>
       <!-- SECONDES (Pour commentaire plus approfondis voir "Jour" l.28-41) -->
-      <span class="item html seconde_item">
-        <h3 class="seconde_h3 h3">0</h3><p></p>
-        <h3 class="mot_seconde_h3 h3">0</h3>
+      <span class="item">
+        <h3 class="seconde_h3 h3_nb">0</h3><p></p>
+        <h3 class="mot_seconde_h3 h3_txt">0</h3>
         <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
         <g>
           <title>Layer 1</title>
@@ -95,10 +96,13 @@
       </span>
     </div>
     <!-- Asterisques -->
+    <br><br>
     <div style="text-align: center; color: white;">
       <p style="display:none;" class="etoile_bar">Le début de la barre de progression est le 08/11/2021 8h00</p>
       <p style="display:none;" class="etoile_delay">Il peut y avoir 0.5 maximum de delay par rapport a la réalitée comparé a quand la page est lancée</p>
     </div>
+    <!-- MODE CLAIR/SOMBRE -->
+    <img class="couleur" id="icone" src="Images/soleil.png" onclick="theme()">
     <script src="bêta.js"></script>
   </body>
 </html>

@@ -1,3 +1,13 @@
+// THEME CLAIR / SOMBRE
+function theme() {
+    var icone = document.getElementById("icone");
+    document.body.classList.toggle("clair")
+    if(document.body.classList.contains("clair")){
+        icone.src = "Images/lune.png"
+    } else {
+        icone.src = "Images/soleil.png"
+    }
+}
 // Variables utiles partout
 temps1 = [
     "seconde", "minute", "heure", "jour", // 0-3
@@ -21,21 +31,21 @@ min_vacs = []
 
 // Zones
 $('.zone option[value="C"]').prop('selected',true);
-function zone(zone) {
+function zone(zone, stop) {
+    // zone=$(".zone").val()
     min_vacs.push(min_vacs_A[numero_vacs_nb-1], min_vacs_B[numero_vacs_nb-1], min_vacs_C[numero_vacs_nb-1],)
     for (let i = 0; i < 2; i++) {
-        int_zone = parseInt(zone, 36)-10;
-        if(int_zone==i) {
-            // $(".cal").attr({
-            //     "value": min_vacs[i],
-            //     "min": min_vacs[i],
-            //     "max": Ajout_jour(min_vacs[i], 2)
-            // });
-            var picker = new Pikaday({
-                field: document.getElementById('cal'),
-                maxDate: Ajout_jour(min_vacs[i], 2),
-                minDate: min_vacs[i]
-              });
+        window.int_zone = parseInt(zone, 36)-10;
+        if(stop=="stop"){
+            return;
+        } else {
+            if(int_zone==i) {
+                $(".cal").attr({
+                    "value": min_vacs[i],
+                    "min": min_vacs[i],
+                    "max": Ajout_jour(min_vacs[i], 2)
+                });
+            }
         }
     }
     calendrier()
@@ -79,7 +89,7 @@ var width = 0
 function move(end, beginning) {
     etoile = $(".etoile").clone()
     window.actualisation1 = setTimeout("move(" + end + "," + beginning + ");", 1000);
-    if (width <= 100) {
+    if ((width <= 100) && (width >= 0)) {
         mnt = new Date();
         width = (Math.round((100/(end-beginning)*(mnt-beginning))*100))/100 // Arrondi au centieme
         myBar.style.width = width + "%";
@@ -94,14 +104,21 @@ function move(end, beginning) {
 
 function calendrier() {
     window.Date_ = $(".cal").val(); //Fonction globale
-    unix(Date_)
-    for ( let i = 4; i < 8; i++) {
-    $(".circle_animation_" + temps1[i]).css("transition", "all 0.5s linear");
-    setTimeout(function () {
-        $(".circle_animation_" + temps1[i]).css("transition", "all 1s linear");
-    }, 100);} // Fait que pour passer du nombre originel au nouveau nombre ça prenne seulement 0.5 sec et non l'unitée changée
-    compte_a_rebours() // Met les bonnes valeurs
-    load() // Cercles rapides
+    if(Date_=="") {
+        zone($(".zone").val(), "stop");
+        $(".cal").val(min_vacs[int_zone]);
+        calendrier();
+        return;
+    } else {
+        unix(Date_)
+        for ( let i = 4; i < 8; i++) {
+        $(".circle_animation_" + temps1[i]).css("transition", "all 0.5s linear");
+        setTimeout(function () {
+            $(".circle_animation_" + temps1[i]).css("transition", "all 1s linear");
+        }, 100);} // Fait que pour passer du nombre originel au nouveau nombre ça prenne seulement 0.5 sec et non l'unitée changée
+        compte_a_rebours() // Met les bonnes valeurs
+        load() // Cercles rapides
+    }
 }
 
 // CONVERTI DATE DE INPUT EN UNIX TIMESTANP
@@ -117,12 +134,13 @@ function compte_a_rebours() {
     var date_evenement = new Date(Date_)
     var total_secondes = (date_evenement - date_actuelle) / 1000;
     if(date_actuelle >= date_evenement) {
-        $("body").css("background-image", "url('NOEL.png')")
-        $("#myBar").css("border-bottom-right-radius", "25px")
-        $("#myBar").css("border-top-right-radius", "25px")
+        $("body").css("background-image", "url('Images/NOEL.png')")
+        $("#myBar").css({"border-bottom-right-radius":"25px", "border-top-right-radius":"25px"})
         rentrée()
         window.Garder_aligner = $("#aligner").clone()
-        $("#aligner").text("Maintenant !")
+        rentrée()
+        $(".Titre").text("En vacances !")
+        $("#aligner").text("")
         return;
     }
     // Init tous les mots (avec des "s" dès le début)
@@ -167,21 +185,21 @@ function compte_a_rebours() {
 }
 
 function rentrée() {
-    //Utile si user n'apele pas Zone() avant
+    //Utile si Vacances n'apele pas Zone() avant
     min_vacs.push(min_vacs_A[numero_vacs_nb-1], min_vacs_B[numero_vacs_nb-1], min_vacs_C[numero_vacs_nb-1],)
-    zone = $(".zone").val()
+    zones = $(".zone").val()
     var date_actuelle = new Date();
-    for (let i = 0; i < 2; i++) {
-        int_zone = parseInt(zone, 36)-10; // Met la lettre de la zone en chiffre -1
+    for (let i = 0; i < 3; i++) {
+        int_zone = parseInt(zones, 36)-10; // Met la lettre de la zone en chiffre -1
         if(int_zone==i) {
             var date_evenement = Ajout_jour(min_vacs[i], 15)
         }
     }
     if(date_actuelle >= date_evenement) {
-        $(".aligner").replace(Garder_aligner)
         nom_vacances(); // Change le nom des Vacances
-        zone(zone) // Met le calendrier avec les bonnes dates
-        load() // Cercles rapides
+        $(".aligner").replaceAll(Garder_aligner)
+        zone(zones); // Met le calendrier avec les bonnes dates
+        load(); // Cercles rapides
         return;
     };
 }
