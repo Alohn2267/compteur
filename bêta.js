@@ -8,6 +8,7 @@ function theme() {
         icone.src = "Images/soleil.png"
     }
 }
+
 // Variables utiles partout
 temps1 = [
     "seconde", "minute", "heure", "jour", // 0-3
@@ -24,38 +25,10 @@ function etoile1(type) {
 nom_vacs = ["de Noël", "d'hiver", "de printemps", "d'été",]
 
 // Dates vacances et rentrées
-min_vacs_A = ["2021-12-17T00:00", "2022-02-11T00:00", "2022-04-15T00:00", "2022-07-07T00:00"]
-min_vacs_B = ["2021-12-17T00:00", "2022-02-04T00:00", "2022-04-08T00:00", "2022-07-07T00:00"]
-min_vacs_C = ["2021-12-17T00:00", "2022-02-18T00:00", "2022-04-22T00:00", "2022-07-07T00:00"]
+min_vacs_A = ["2022-02-11T00:00", "2022-04-15T00:00", "2022-07-07T00:00"]
+min_vacs_B = ["2022-02-04T00:00", "2022-04-08T00:00", "2022-07-07T00:00"]
+min_vacs_C = ["2022-02-18T00:00", "2022-04-22T00:00", "2022-07-07T00:00"]
 min_vacs = []
-
-// Zones
-$('.zone option[value="C"]').prop('selected',true);
-function zone(zone, stop) {
-    // zone=$(".zone").val()
-    min_vacs.push(min_vacs_A[numero_vacs_nb-1], min_vacs_B[numero_vacs_nb-1], min_vacs_C[numero_vacs_nb-1],)
-    for (let i = 0; i < 2; i++) {
-        window.int_zone = parseInt(zone, 36)-10;
-        if(stop=="stop"){
-            return;
-        } else {
-            if(int_zone==i) {
-                $(".cal").attr({
-                    "value": min_vacs[i],
-                    "min": min_vacs[i],
-                    "max": Ajout_jour(min_vacs[i], 2)
-                });
-            }
-        }
-    }
-    calendrier()
-}
-
-function Ajout_jour(date, jours) {
-    var nouvelle = new Date(date);
-    nouvelle.setDate(nouvelle.getDate() + jours);
-    return nouvelle;
-}
 
 numero_vacs_nb = 0
 function nom_vacances() {
@@ -64,6 +37,36 @@ function nom_vacances() {
     etoile.appendTo(".Titre")
     numero_vacs_nb++;
 }
+nom_vacances();
+
+// Zones
+$('.zone option[value="C"]').prop('selected',true);
+function zone(zone, stop) {
+    min_vacs.push(min_vacs_A[numero_vacs_nb-1], min_vacs_B[numero_vacs_nb-1], min_vacs_C[numero_vacs_nb-1],)
+    for (let i = 0; i < 3; i++) {
+        window.int_zone = parseInt(zone, 36)-10;
+        if(stop=="stop"){
+            return;
+        } else {
+            if(int_zone==i) {
+                $(".cal").attr({
+                    "value": min_vacs[i],
+                    "min": min_vacs[i],
+                    "max": Ajout_jour(min_vacs[i], 2),
+                });
+            }
+        }
+    }
+    calendrier()
+}
+zone($(".zone").val())
+
+function Ajout_jour(date, jours) {
+    var nouvelle = new Date(date);
+    nouvelle.setDate(nouvelle.getDate() + jours);
+    return nouvelle;
+}
+
 // FAIT QUE LA TRANSITION AU DéBUT NE SOIS PAS HYPER LENTE
 function load() {
     setTimeout(function () {
@@ -87,14 +90,12 @@ var initialOffset = '440';
 // BAR DE CHARGEMENT
 var width = 0
 function move(end, beginning) {
-    etoile = $(".etoile").clone()
     window.actualisation1 = setTimeout("move(" + end + "," + beginning + ");", 1000);
     if ((width <= 100) && (width >= 0)) {
         mnt = new Date();
         width = (Math.round((100/(end-beginning)*(mnt-beginning))*100))/100 // Arrondi au centieme
         myBar.style.width = width + "%";
         txt_bar.innerHTML = width  + "% de déjà fait !";
-        etoile.appendTo("#txt_bar");
     } else {
     myBar.style.width = 99 + "%";
     txt_bar.innerHTML = "En vacances !";
@@ -125,16 +126,15 @@ function calendrier() {
 function unix(OG_date){
     var unixtime = Date.parse(OG_date)
     clearInterval(window.actualisation1);
-    move(unixtime, 1636354800000)
+    move(unixtime, 1641193200000)
 }
 
 // Compte à rebours
 function compte_a_rebours() {
-    var date_actuelle = new Date();
-    var date_evenement = new Date(Date_)
-    var total_secondes = (date_evenement - date_actuelle) / 1000;
-    if(date_actuelle >= date_evenement) {
-        $("body").css("background-image", "url('Images/NOEL.png')")
+    window.date_actuelle = new Date();
+    window.date_evenement = new Date(Date_)
+    var total_secondes = (window.date_evenement - window.date_actuelle) / 1000;
+    if(window.date_actuelle >= window.date_evenement) {
         $("#myBar").css({"border-bottom-right-radius":"25px", "border-top-right-radius":"25px"})
         rentrée()
         window.Garder_aligner = $("#aligner").clone()
@@ -188,20 +188,19 @@ function rentrée() {
     //Utile si Vacances n'apele pas Zone() avant
     min_vacs.push(min_vacs_A[numero_vacs_nb-1], min_vacs_B[numero_vacs_nb-1], min_vacs_C[numero_vacs_nb-1],)
     zones = $(".zone").val()
-    var date_actuelle = new Date();
+    window.date_actuelle = new Date();
     for (let i = 0; i < 3; i++) {
         int_zone = parseInt(zones, 36)-10; // Met la lettre de la zone en chiffre -1
         if(int_zone==i) {
-            var date_evenement = Ajout_jour(min_vacs[i], 15)
+            window.date_evenement = Ajout_jour(min_vacs[i], 15)
         }
     }
-    if(date_actuelle >= date_evenement) {
+    if(window.date_actuelle >= window.date_evenement) {
         nom_vacances(); // Change le nom des Vacances
         $(".aligner").replaceAll(Garder_aligner)
-        zone(zones); // Met le calendrier avec les bonnes dates
+        zone(zones);
         load(); // Cercles rapides
         return;
     };
 }
-nom_vacances();
 console.log("Js lié");
