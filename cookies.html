@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <!-- Met le titre de la page -->
+        <title>Cookies RGPD</title>
+        <!-- Encodage utf-8 pour les accents et tt  -->
+        <meta charset= "utf-8">
+        <!-- Met le css -->
+        <link rel="stylesheet" href="beta.css">
+        <!-- Pour toutes les tailles d'ecrans -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Met le logo -->
+        <link rel="icon" type="image/png" href="Images/logo.png">
+    </head>
+    <body>
+        <style type="text/css">
+            body { background:#666; }
+            a {color:#000; background-color:#fff;}
+        </style>
+        <a href="./index.html">Revenir au site</a>
+        <h1>Voici les cookies utilisés sur ce site</h1>
+        <ul>
+            <li>Theme (Sombre ou Clair)</li>
+            <li>Nombre de chiffre apres la virgule</li>
+            <li>Date du début personnalisé</li>
+            <li>Date du fin personnalisé</li>
+            <li>Zone</li>
+            <li>Couleurs du cercle des jours</li>
+            <li>Couleurs du cercle des heures</li>
+            <li>Couleurs du cercle des minutes</li>
+            <li>Couleurs du cercle des secondes</li>
+            <li>Votre choix au cookies</li>
+        </ul>
+        <h3>Vous pouvez supprimer tous les cookies en allant dans la roue crantée en bas à gauche de votre écran puis en bas, oublier les cookies <a style="cursor: pointer; text-decoration: underline;" onclick="deleteAllCookies()">(ou en cliquant ici)</a>.
+            <br> Les cookies sont stockés uniquement sur votre ordinateur.
+            <br>Les cookies ne sont partagés avec personne, et ne sont accessibles par personne, même pas le site.<br>Les cookies sont conservés pour un maximum de 45 jours</h3>
+    <script>
+        function deleteAllCookies() {
+            var cookies = document.cookie.split(";");
+
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+            location.reload()
+        }
+    </script>
+    </body>
+</html>

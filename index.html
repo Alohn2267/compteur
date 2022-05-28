@@ -2,42 +2,43 @@
 <html lang="fr">
   <head>
     <!-- Met le titre de la page -->
-    <title>[Bêta] Compte à rebours vacances</title>
+    <title>[beta] Compte à rebours vacances</title>
     <!-- Encodage utf-8 pour les accents et tt  -->
     <meta charset= "utf-8">
     <!-- Insère JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Met le css -->
-    <link rel="stylesheet" href="bêta.css">
+    <link rel="stylesheet" href="beta.css">
     <!-- Pour toutes les tailles d'ecrans -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Met le logo -->
     <link rel="icon" type="image/png" href="Images/logo.png">
-
-    <!-- [DEV] -->
-      <!-- <meta http-equiv="refresh" content="3"> -->
   </head>
   <body onload="calendrier()" style="background-color: var(--font)">
     <!-- BAR DE CHARGEMENT -->
     <div id="myProgress"> <!-- Bar entiere -->
-      <div id="myBar"></div> <!-- Ce qui a déjà été fait -->
       <div id="txt_bar"><!-- <a class="etoile" onclick="etoile1('bar')" style="color:#a0a2ff; font-size:15px; cursor:pointer;">*</a></p>--></div> 
+      <div id="myBar"></div> <!-- Ce qui a déjà été fait -->
     </div>
     <!-- Zones scolaires -->
     <div class="millieu">
       <br>
-      <select style='color:black' class="zone" name="Zone" value="C" onchange="zone(value);">
-        <option value="A">Zone A</option>
-        <option value="B">Zone B</option>
-        <option value="C">Zone C</option>
-      </select>
     <!-- Calendrier -->
-    <br><br>
-      <label for="cal">Choisi quand tu termines<br></label><br class="tel_none">
-      <input style='color:black' onchange="calendrier()" class="cal" id="cal" type="datetime-local" min="2099-01-01T00:00" max="2099-01-01T00:00" value="2099-01-01T00:00"></input>
     </div>
     <!-- COMPTEUR AVEC RONDS -->
-  <p class="Titre">Les vacances seront dans :<a class="etoile1" onclick="etoile1('delay')" style="color: #a0a2ff; font-size:35px; cursor:pointer;">*</a></p>
+    <p class="Titre">Les vacances
+      <select style='color:black; text-decoration: underline; text-decoration-color: var(--primaire);' class="zone" name="Zone" value="C" onchange="zone(value);">
+        <option value="A">de la Zone A</option>
+        <option value="B">de la Zone B</option>
+        <option value="C">de la Zone C</option>
+        <option id="opt_perso" disabled="disabled" value="Personnalisé">Personnalisés</option>
+        <!-- <option value="Personnalisé">Personnalisé</option> -->
+      </select>
+      <span id="vacs"></span>
+       seront dans :
+      <a class="etoile1" onclick="etoile1('delay')" style="color: #a0a2ff; font-size:35px; cursor:pointer;">*</a>
+    </p>
+    <!-- <div class="Titre"></div> -->
     <div class="aligner" id="aligner">
       <!-- JOURS -->
       <span class="item">
@@ -48,7 +49,7 @@
         <!-- Crai un cercle -->
         <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
         <g>
-          <title>Layer 1</title>
+          <title>Cercle des jours</title>
           <!-- Cercle gris transparant -->
           <circle r="69.85699" cy="81" cx="81" stroke-width="1" stroke="rgba(125, 125, 125, 0.5)" fill="none"/>
           <!-- Cercle de couleur -->
@@ -62,7 +63,7 @@
         <h3 class="mot_heure_h3 h3_txt">0</h3>
         <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
         <g>
-          <title>Layer 1</title>
+          <title>Cercle des heures</title>
           <circle r="69.85699" cy="81" cx="81" stroke-width="1" stroke="rgba(125, 125, 125, 0.5)" fill="none"/>
           <circle class="circle_animation_heure" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#99ccff" fill="none"/>
         </g>
@@ -76,7 +77,7 @@
         <h3 class="mot_minute_h3 h3_txt">0</h3>
         <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
         <g>
-          <title>Layer 1</title>
+          <title>Cercle des minutes</title>
           <circle r="69.85699" cy="81" cx="81" stroke-width="1" stroke="rgba(125, 125, 125, 0.5)" fill="none"/>
           <circle class="circle_animation_minute" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#bfb" fill="none"/>
         </g>
@@ -88,7 +89,7 @@
         <h3 class="mot_seconde_h3 h3_txt">0</h3>
         <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
         <g>
-          <title>Layer 1</title>
+          <title>Cercle des secondes</title>
           <circle r="69.85699" cy="81" cx="81" stroke-width="1" stroke="rgba(125, 125, 125, 0.5)" fill="none"/>
           <circle class="circle_animation_seconde" r="69.85699" cy="81" cx="81" stroke-width="4" stroke="#ff9999" fill="none"/>
         </g>
@@ -98,11 +99,44 @@
     <!-- Asterisques -->
     <br><br>
     <div style="text-align: center; color: white;">
-      <p style="display:none;" class="etoile_bar">Le début de la barre de progression est le 08/11/2021 8h00</p>
-      <p style="display:none;" class="etoile_delay">Il peut y avoir 0.5 maximum de delay par rapport a la réalitée comparé a quand la page est lancée</p>
+      <p style="display:none;" class="etoile_bar">Test</p>
+      <p style="display:none;" class="etoile_delay">Le début de la barre de chargement et du cercle "jour" est le <div style="display:None" id="début"></div></p>
     </div>
     <!-- MODE CLAIR/SOMBRE -->
-    <img class="couleur" id="icone" src="Images/soleil.png" onclick="theme()">
-    <script src="bêta.js"></script>
+    <img class="icone" id="menu_couleur" src="Images/Blanc-Engrenage.png" onclick="menu('on')">
+    <div id="menu" style="overflow:scroll; height:auto">
+      <br>
+      <div class="Som-Cla">
+        <img class="icone" class="fermer" id="fermer" src="Images/Blanc-Fermer.png" onclick="menu('off')"><br>
+        <p onclick="theme()">Theme, Sombre/Clair : <img class="icone" id="couleur" src="Images/soleil.png"></p>
+        <hr class="ligne">
+        <p class="virgul">Nombre(s) après la virgule : <span id="nb_virgule">3</span> <input type="range" step=".1" min="0" max="10" value="2" id="virgule" onchange="virgule()" smooth="yes"></p>
+        <div class="millieu1">
+          <hr class="ligne">
+          <label for="cal"><p>Date de "Personnalisé" (Ne marche qu'avec les cookies) :</p></label>
+          <span style="color:var(--secondaire)">Rentrée <input style='color:black' onblur="personnalise()" class="cal" id="cal_debut" type="datetime-local"></input></span>
+          <span style="color:var(--secondaire)">Début des vacances <input style='color:black' onblur="personnalise()" class="cal" id="cal_fin" type="datetime-local" value="2099-01-01T00:00"></input></span>
+          <hr class="ligne">
+          <p class="virgul">Couleur des cercles</p><br>
+          <input type="color" id="couleur_jour" value="#ffcc66" onchange="cercle_couleur('jour')" title="Cercle jour">
+          <input type="color" id="couleur_heure" value="#99ccff" onchange="cercle_couleur('heure')" title="Cercle heure">
+          <input type="color" id="couleur_minute" value="#bbffbb" onchange="cercle_couleur('minute')" title="Cercle minute">
+          <input type="color" id="couleur_seconde" value="#ff9999" onchange="cercle_couleur('seconde')" title="Cercle seconde">
+        </div>
+        <br>
+        <hr>
+        <p><button onclick="Save()" class="sauvgarder">Sauvegarder pour les prochaines fois</button><button class="PasCookies" onclick="deleteAllCookies()">Oublier les parametres</button></p>
+        <hr class="sauvgarder">
+        <br>
+      </div>
+    </div>
+    <div class="Cookie">
+      <p>Ce site utilise des cookies, en cliquant sur "Tout Accepter" vous autorisez les cookies.
+        <br>Ils ne sont stockés que sur votre appareil et sont seulement utilisés pour se souvenir de vos choix : <a href="./cookies.html">Vous pouvez consultez les cookies ici</a></p>
+      <button class="AccepterCookies" onclick="Choix_Cookies(true)">Tout Accepter</button>
+      <button class="AccepterCookies" onclick="Choix_Cookies(false)">Tout Refuser</button>
+      <br><p></p>
+    </div>
+    <script src="beta.js"></script>
   </body>
 </html>
